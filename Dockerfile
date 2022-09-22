@@ -60,14 +60,14 @@ RUN wget https://github.com/cloudflare/cloudflared/releases/download/${CLOUDFLAR
     sudo chown root:root  /tmp/staging/usr/bin/cloudflared
 
 # Download 'openvscode-server'
-RUN wget https://github.com/gitpod-io/openvscode-server/releases/download/openvscode-server-v1.71.0/openvscode-server-${OPENVSCODE_VERSION}-linux-${ALT_ARCH}.tar.gz && \
+RUN wget https://github.com/gitpod-io/openvscode-server/releases/download/openvscode-server-${OPENVSCODE_VERSION}/openvscode-server-${OPENVSCODE_VERSION}-linux-${ALT_ARCH}.tar.gz && \
 # Unpack it
     tar -xf openvscode-server-${OPENVSCODE_VERSION}-linux-${ALT_ARCH}.tar.gz && \
     rm openvscode-server-${OPENVSCODE_VERSION}-linux-${ALT_ARCH}.tar.gz && \
 # Remove the 'node binary that comes with it
     rm openvscode-server-${OPENVSCODE_VERSION}-linux-${ALT_ARCH}/node && \
 # Replacing it with a symlink
-    ln -s /usr/bin/node ./openvscode-server-v1.71.0-linux-${ALT_ARCH}/node && \
+    ln -s /usr/bin/node ./openvscode-server-${OPENVSCODE_VERSION}-linux-${ALT_ARCH}/node && \
 # Remove pre-compiled binary node modules
     find . -name "*.node" -exec rm -rf {} \; && \
 # Put everything into a 'staging' folder
