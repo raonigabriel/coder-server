@@ -39,7 +39,9 @@ Then, point your browser to [http://localhost:8000](http://localhost:8000)
  
 # Setting up reverse tunnels
 [Official Guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide/)
+
 [Tutorial](https://omar2cloud.github.io/cloudflare/cloudflared/cloudflare/)
+
 [Video](https://www.youtube.com/watch?v=VrV0udRUi8A)
 
   
