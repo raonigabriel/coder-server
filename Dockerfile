@@ -9,8 +9,8 @@ ARG ALT_ARCH=arm64
 # This inherits from the hack above
 FROM ${TARGETOS}-${TARGETARCH} AS builder
 ARG TARGETARCH
-ARG CLOUDFLARE_VERSION=2022.10.1
-ARG OPENVSCODE_VERSION=v1.72.2
+ARG CLOUDFLARE_VERSION=2022.10.3
+ARG OPENVSCODE_VERSION=v1.72.3
 
 # Install npm, nodejs and some tools required to build native node modules 
 RUN sudo apk --no-cache add npm build-base libsecret-dev python3 wget
