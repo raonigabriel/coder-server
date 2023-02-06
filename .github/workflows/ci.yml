@@ -16,9 +16,9 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of Sonar analysis
       - name: Hadolint
-        uses: hadolint/hadolint-action@v3.0.0
+        uses: hadolint/hadolint-action@v3
         with:
-          dockerfile: Dockerfile
+          dockerfile: ./Dockerfile
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
