@@ -1,0 +1,26 @@
+{
+  "name": "coder-server",
+  "version": "1.0.0",
+  "description": "This is my opinionated attempt to build a lightweight docker image to run [openvscode-server](https://github.com/gitpod-io/openvscode-server). Think vscode, on the browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raonigabriel/coder-server.git"
+  },
+  "author": "Raoni Gabriel",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/raonigabriel/coder-server/issues"
+  },
+  "homepage": "https://github.com/raonigabriel/coder-server#readme",
+  "dependencies": {
+    "@parcel/watcher": "^2.1.0",
+    "keytar": "^7.9.0",
+    "native-watchdog": "^1.4.1",
+    "node-pty": "^0.10.1",
+    "spdlog": "^0.13.7"
+  }
+}
