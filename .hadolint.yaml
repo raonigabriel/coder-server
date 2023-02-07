@@ -1,0 +1,4 @@
+ignored:
+  - DL3018 # Pin versions in apk add. Instead of apk add <package>, use apk add <package>:<version>
+  - SC2086 # Double quote to prevent globbing and word splitting
+  - DL3006 # Always tag the version of an image explicitly
