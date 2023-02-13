@@ -1,16 +1,16 @@
 # This is a hack to setup alternate architecture names
 # For this to work, it needs to be built using docker 'buildx'
-FROM ghcr.io/raonigabriel/coder-core:1.0.3 AS linux-amd64
+FROM ghcr.io/raonigabriel/coder-core:1.0.4 AS linux-amd64
 ARG ALT_ARCH=x64
 
-FROM ghcr.io/raonigabriel/coder-core:1.0.3 AS linux-arm64
+FROM ghcr.io/raonigabriel/coder-core:1.0.4 AS linux-arm64
 ARG ALT_ARCH=arm64
 
 # This inherits from the hack above
 FROM ${TARGETOS}-${TARGETARCH} AS builder
 ARG TARGETARCH
 ARG CLOUDFLARE_VERSION=2023.2.1
-ARG OPENVSCODE_VERSION=v1.75.0
+ARG OPENVSCODE_VERSION=v1.75.1
 
 # Install npm, nodejs and some tools required to build native node modules
 USER root
