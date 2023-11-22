@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/raonigabriel/coder-server#readme",
   "dependencies": {
-    "@parcel/watcher": "^2.1.0",
-    "keytar": "^7.9.0",
-    "native-watchdog": "^1.4.1",
-    "node-pty": "^0.10.1",
-    "spdlog": "^0.13.7"
+    "@parcel/watcher": "2.1.0",
+    "kerberos": "^2.0.1",
+    "native-watchdog": "^1.4.2",
+    "node-pty": "1.1.0-beta5",
+    "@vscode/spdlog": "^0.13.12"
   }
 }
