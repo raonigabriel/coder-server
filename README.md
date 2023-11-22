@@ -5,9 +5,10 @@ Enough talking, show me some numbers:
 
 | REPOSITORY | SIZE¹ |
 | --- | --- |
-| [codercom/code-server](https://github.com/coder/code-server) | 781MB |
-| [gitpod/openvscode-server](https://github.com/gitpod-io/openvscode-server)| 587MB |
-| [ghcr.io/raonigabriel/coder-server](https://github.com/raonigabriel/coder-core)| 246MB |
+| [codercom/code-server:latest](https://github.com/coder/code-server) | 697MB |
+| [linuxserver/code-server:latest](https://docs.linuxserver.io/images/docker-code-server) | 563MB |
+| [gitpod/openvscode-server:latest](https://github.com/gitpod-io/openvscode-server)| 523MB |
+| [ghcr.io/raonigabriel/coder-server:latest](https://github.com/raonigabriel/coder-core)| 208MB |
 
 * (1) Uncompressed sizes, on amd64. Those values are even smaller on aarch64!!
 
