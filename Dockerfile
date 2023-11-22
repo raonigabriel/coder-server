@@ -1,9 +1,9 @@
 # This is a hack to setup alternate architecture names
 # For this to work, it needs to be built using docker 'buildx'
-FROM ghcr.io/raonigabriel/coder-core:latest AS linux-amd64
+FROM ghcr.io/raonigabriel/coder-core:1.1.0 AS linux-amd64
 ARG ALT_ARCH=x64
 
-FROM ghcr.io/raonigabriel/coder-core:latest AS linux-arm64
+FROM ghcr.io/raonigabriel/coder-core:1.1.0 AS linux-arm64
 ARG ALT_ARCH=arm64
 
 # This inherits from the hack above
