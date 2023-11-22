@@ -1,20 +1,20 @@
 # This is a hack to setup alternate architecture names
 # For this to work, it needs to be built using docker 'buildx'
-FROM ghcr.io/raonigabriel/coder-core:1.0.4 AS linux-amd64
+FROM ghcr.io/raonigabriel/coder-core:latest AS linux-amd64
 ARG ALT_ARCH=x64
 
-FROM ghcr.io/raonigabriel/coder-core:1.0.4 AS linux-arm64
+FROM ghcr.io/raonigabriel/coder-core:latest AS linux-arm64
 ARG ALT_ARCH=arm64
 
 # This inherits from the hack above
 FROM ${TARGETOS}-${TARGETARCH} AS builder
 ARG TARGETARCH
-ARG CLOUDFLARE_VERSION=2023.2.1
-ARG OPENVSCODE_VERSION=v1.75.1
+ARG CLOUDFLARE_VERSION=2023.10.0
+ARG OPENVSCODE_VERSION=v1.84.0
 
 # Install npm, nodejs and some tools required to build native node modules
 USER root
-RUN apk --no-cache add npm build-base libsecret-dev python3 wget
+RUN apk --no-cache add build-base libsecret-dev krb5-dev python3 wget
 
 COPY package*.json /tmp/
 
@@ -24,20 +24,20 @@ RUN npm install && \
 # Remove any precompiled native modules
     find /tmp/node_modules -name "*.node" -exec rm -rf {} \;
 
-WORKDIR /tmp/node_modules/keytar
-# Build keytar native module
-RUN npm run build && \
-    strip /tmp/node_modules/keytar/build/Release/keytar.node
+# Build kerberos native module
+WORKDIR /tmp/node_modules/kerberos
+RUN npm run install && \
+    strip /tmp/node_modules/kerberos/build/Release/kerberos.node
 
 # Build node-pty native module
 WORKDIR /tmp/node_modules/node-pty
 RUN npm install && \
     strip /tmp/node_modules/node-pty/build/Release/pty.node
 
-# Build spdlog native module
-WORKDIR /tmp/node_modules/spdlog
+# Build @vscode/spdlog native module
+WORKDIR /tmp/node_modules/@vscode/spdlog
 RUN npm rebuild && \
-    strip /tmp/node_modules/spdlog/build/Release/spdlog.node
+    strip /tmp/node_modules/@vscode/spdlog/build/Release/spdlog.node
 
 # Build native-watchdog native module
 WORKDIR /tmp/node_modules/native-watchdog
@@ -75,9 +75,14 @@ RUN wget -nv https://github.com/gitpod-io/openvscode-server/releases/download/op
 # Put everything into a 'staging' folder
     mkdir -p /tmp/staging/opt/ && \
     mv openvscode-server-${OPENVSCODE_VERSION}-linux-${ALT_ARCH} /tmp/staging/opt/openvscode-server && \
-    cp /tmp/node_modules/keytar/build/Release/keytar.node /tmp/staging/opt/openvscode-server/node_modules/keytar/build/Release/keytar.node && \
+    mkdir -p /tmp/staging/opt/openvscode-server/node_modules/kerberos/build/Release && \
+    mkdir -p /tmp/staging/opt/openvscode-server/node_modules/node-pty/build/Release && \
+    mkdir -p /tmp/staging/opt/openvscode-server/node_modules/@vscode/spdlog/build/Release && \
+    mkdir -p /tmp/staging/opt/openvscode-server/node_modules/native-watchdog/build/Release && \
+    mkdir -p /tmp/staging/opt/openvscode-server/node_modules/@parcel/watcher/build/Release && \
+    cp /tmp/node_modules/kerberos/build/Release/kerberos.node /tmp/staging/opt/openvscode-server/node_modules/kerberos/build/Release/kerberos.node && \
     cp /tmp/node_modules/node-pty/build/Release/pty.node /tmp/staging/opt/openvscode-server/node_modules/node-pty/build/Release/pty.node && \
-    cp /tmp/node_modules/spdlog/build/Release/spdlog.node /tmp/staging/opt/openvscode-server/node_modules/spdlog/build/Release/spdlog.node && \
+    cp /tmp/node_modules/@vscode/spdlog/build/Release/spdlog.node /tmp/staging/opt/openvscode-server/node_modules/@vscode/spdlog/build/Release/spdlog.node && \
     cp /tmp/node_modules/native-watchdog/build/Release/watchdog.node /tmp/staging/opt/openvscode-server/node_modules/native-watchdog/build/Release/watchdog.node && \
     cp /tmp/node_modules/@parcel/watcher/build/Release/watcher.node /tmp/staging/opt/openvscode-server/node_modules/@parcel/watcher/build/Release/watcher.node && \
     chown -R root:root /tmp/staging/opt/openvscode-server
@@ -88,6 +93,10 @@ USER coder
 # This inherits from the hack above
 FROM ${TARGETOS}-${TARGETARCH} AS final
 ARG TARGETARCH
+
+USER root
+RUN apk --no-cache add krb5
+USER coder
 
 # Copy stuff from the staging folder of the 'builder' stage
 COPY --from=builder /tmp/staging /
