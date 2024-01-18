@@ -58,7 +58,7 @@ ENV JAVA_HOME=/usr/lib/jvm/default-jvm \
 # Installing Java and tools
 RUN sudo apk --no-cache add maven gradle && \
 # Installing Java extensions
-    sudo openvscode-server --install-extension vscjava.vscode-java-pack \
+    openvscode-server --install-extension vscjava.vscode-java-pack \
     vscjava.vscode-gradle vscjava.vscode-spring-initializr
 ```
 
